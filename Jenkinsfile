@@ -1,0 +1,1 @@
+echo "Deploy rodado pelo Jenkins"
