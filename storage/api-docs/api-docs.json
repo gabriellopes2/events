@@ -1,0 +1,86 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "EventsFull API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/events": {
+            "get": {
+                "summary": "Busca todos os eventos",
+                "operationId": "f03fc722854a9c744a79b16f6b27016c",
+                "responses": {
+                    "200": {
+                        "description": "Lista eventos"
+                    }
+                }
+            }
+        },
+        "/api/events/{id}": {
+            "get": {
+                "summary": "Busca todos os participantes de um evento",
+                "operationId": "d4b6a3bafa4e4e43ce4bbd88e5217858",
+                "responses": {
+                    "200": {
+                        "description": "Lista participantes"
+                    }
+                }
+            }
+        },
+        "/api/subscriptions/{id}": {
+            "get": {
+                "summary": "Busca inscrição",
+                "operationId": "dc6cbbe87f35395c4b52d3a7452446b3",
+                "responses": {
+                    "200": {
+                        "description": "Inscrição"
+                    }
+                }
+            }
+        },
+        "/api/subscriptions": {
+            "post": {
+                "summary": "Realiza inscrição e envia email",
+                "operationId": "f8f98c5c6c19bcfed3882488f2fcb8cd",
+                "responses": {
+                    "200": {
+                        "description": "Inscrição realizada"
+                    }
+                }
+            }
+        },
+        "/api/subscriptions/cancel/{id}": {
+            "post": {
+                "summary": "Cancela uma inscrição e envia um email",
+                "operationId": "09b3f069210586718bda26872bd3d844",
+                "responses": {
+                    "200": {
+                        "description": "Inscrição cancelada"
+                    }
+                }
+            }
+        },
+        "/api/checkin/{id}": {
+            "post": {
+                "summary": "Realiza a presença no evento e envia um email",
+                "operationId": "8f39232bf19da562a9d7cd2bc99edfe7",
+                "responses": {
+                    "200": {
+                        "description": "Presença confirmada"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Autenticação",
+                "operationId": "be37a6d4fc7c93bf7bf2806f0c8d0bdc",
+                "responses": {
+                    "200": {
+                        "description": "Aunteticação efetuada!"
+                    }
+                }
+            }
+        }
+    }
+}
