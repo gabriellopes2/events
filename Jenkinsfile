@@ -15,9 +15,11 @@ pipeline {
         stage("build"){
             steps {
                 echo 'build'
-                sh 'cd /var/www/events'
-                sh 'git pull https://github.com/gabriellopes2/events.git main'
-                sh 'php artisan migrate'
+                sh '''
+                    cd /var/www/events
+                    git pull
+                    php artisan migrate
+                '''
             }
         }
     }
