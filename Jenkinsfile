@@ -8,6 +8,7 @@ pipeline {
         }
         stage("Executando testes") {
             steps {
+                sh 'php artisan db:seed'
                 sh 'php artisan test'
             }
         }
