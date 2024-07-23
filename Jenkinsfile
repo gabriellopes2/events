@@ -6,5 +6,11 @@ pipeline {
                 sh 'php artisan test'
             }
         }
+        stage("build"){
+            steps {
+                echo 'build'
+                sh 'git pull'
+            }
+        }
     }
 }

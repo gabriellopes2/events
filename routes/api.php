@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [UsersController::class, 'login']);
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+//Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('events', [EventsController::class, 'index']);
     Route::get('events/{id}', [EventsController::class, 'searchEventParticipants']);
     Route::get('subscriptions/{id}', [SubscriptionsController::class, 'searchSubscription']);
@@ -28,5 +28,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('subscriptions', [SubscriptionsController::class, 'register']);
     Route::post('checkin/{id}', [SubscriptionsController::class, 'checkin']);
     Route::post('users', [UsersController::class, 'index']);
-});
+//});
 
