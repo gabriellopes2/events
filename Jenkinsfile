@@ -4,6 +4,7 @@ pipeline {
         stage("Preparando ambiente") {
             steps {
                 sh 'php artisan migrate'
+                sh 'php artisan db:seed'
             }
         }
         stage("Executando testes") {
