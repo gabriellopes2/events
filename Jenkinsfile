@@ -9,7 +9,9 @@ pipeline {
         stage("build"){
             steps {
                 echo 'build'
+                sh 'cd /var/www/events'
                 sh 'git pull'
+                sh 'php artisan migrate'
             }
         }
     }
