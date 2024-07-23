@@ -17,7 +17,7 @@ class UserTest extends TestCase
     {
         $userData = [
             'name' => 'Teste',
-            'username' => 'teste',
+            'username' => 'teste8',
             'password' => 'teste123'
         ];
 
@@ -32,32 +32,58 @@ class UserTest extends TestCase
         // ]);
     }
 
-    /**
-     * A basic test example.
-     *
-     * @test
-     */
-    /*public function campos_obrigatorios_sao_validados()
+     /** @test */
+     public function nome_deve_ter_um_comprimento_maximo_de_255_caracteres()
+     {
+         $response = $this->post('/api/users', [
+             'name' => str_repeat('a', 256),
+             'username' => 'uniqueuser',
+             'password' => 'password123',
+         ]);
+ 
+         $response->assertSessionHasErrors('name');
+     }
+
+    /** @test */
+    public function username_deve_ter_um_comprimento_maximo_de_255_caracteres()
+    {
+        $response = $this->post('/api/users', [
+            'name' => 'Jane Doe',
+            'username' => str_repeat('a', 256),
+            'password' => 'password123',
+        ]);
+
+        $response->assertSessionHasErrors('username');
+    }
+
+    /** @test */
+    public function todos_os_campos_obrigatorios_devem_estar_presentes()
     {
         $response = $this->post('/api/users', []);
 
-        $response->assertSessionHasErrors(['username', 'password']);
-    }*/
+        $response->assertSessionHasErrors(['name', 'username', 'password']);
+    }
 
-    /**
-     * A basic test example.
-     *
-     * @test
-     */
-    public function nome_de_usuario_deve_ser_unico()
+    /** @test */
+    public function nome_deve_ser_obrigatorio()
     {
-        $newUserData = [
-            'name' => 'Jane Doe',
-            'username' => 'admin2', // username duplicado
+        $response = $this->post('/api/users', [
+            'username' => 'uniqueuser',
             'password' => 'password123',
-        ];
+        ]);
 
-        $response = $this->post('/api/users', $newUserData);
+        $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function username_deve_ser_unico()
+    {
+
+        $response = $this->post('/api/users', [
+            'name' => 'Jane Doe',
+            'username' => 'admin', // Nome de usuário duplicado
+            'password' => 'password123',
+        ]);
 
         $response->assertSessionHasErrors('username');
     }

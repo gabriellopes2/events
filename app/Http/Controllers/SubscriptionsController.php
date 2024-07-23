@@ -7,6 +7,7 @@ use App\Models\SubscriptionModel;
 use Illuminate\Http\Request;
 use App\Mail\MailSender;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 
 class SubscriptionsController extends Controller
@@ -42,6 +43,21 @@ class SubscriptionsController extends Controller
         $users_id = $data['users_id'];
         $eventos_id = $data['eventos_id'];
 
+        $event = EventsModel::find($eventos_id);
+        $user = User::find($users_id);
+
+        if (!$user)
+        {
+            return response()->json(['error' => 'Usuário não encontrado'], 404);
+        }
+
+        if (!$event) {
+            return response()->json(['error' => 'Evento não encontrado'], 404);
+        }
+
+        if (SubscriptionModel::where('eventos_id', $eventos_id)->where('users_id', $users_id)->exists()) {
+            return response()->json(['error' => 'O usuário não pode se inscrever mais de uma vez no evento'], 409);
+        }
 
         SubscriptionModel::create([
             'users_id' => $users_id,
@@ -56,7 +72,7 @@ class SubscriptionsController extends Controller
         ];
 
         // Envia e-mail
-        $this->sendMail($details);
+        //$this->sendMail($details);
         
         return response()->json([
             "message" => "Inscrição realizada!",
@@ -74,18 +90,23 @@ class SubscriptionsController extends Controller
     public function cancelSubscription(Request $request, $args)
     {
         $subscription = SubscriptionModel::find($args);
+
+        if (!$subscription) {
+            return response()->json(['error' => 'Inscrição não encontrada'], 404);
+        }
+
         $subscription->active = false;
         $subscription->save();
 
         $event = EventsModel::find($subscription->eventos_id);
-
+        
         $details = [
             'title' => 'Inscrição cancelada!',
             'body' => "Você cancelou sua inscrição no seguinte evento:<br><h3>$event->name</h3><br>."
         ];
 
         // Envia e-mail
-        $this->sendMail($details);
+        //$this->sendMail($details);
 
         return response()->json([
             'success' => true,
@@ -115,7 +136,7 @@ class SubscriptionsController extends Controller
         ];
 
         // Envia e-mail
-        $this->sendMail($details);
+        //$this->sendMail($details);
 
         return response()->json([
             'success' => true,

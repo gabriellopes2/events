@@ -39,8 +39,7 @@ class EventsController extends Controller
             ->join('users', 'subscriptions.users_id', '=', 'users.id')
             ->where('events.id', '=', $eventId)    
             ->get();
-        die($participantes);
 
-        return response()->json($participantes);
+        return response()->json($participantes, 200);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
@@ -18,10 +19,25 @@ class UsersController extends Controller
          *      @OA\Response(response=200, description="Usuário criado!")
          * )
          */
+
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'password' => 'required',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $data = $request->all();
         $name = $data['name'];
         $username = $data['username'];
         $password = $data['password'];
+
+
+       
 
         User::create([
             'name' => $name,
@@ -45,7 +61,7 @@ class UsersController extends Controller
     public function login(Request $request)
     {
         $user= User::where('username', $request->header('username'))->first();
-        // print_r($data);
+
             if (!$user || !Hash::check($request->header('password'), $user->password)) {
                 return response([
                     'message' => ['Credenciais inválidas.']

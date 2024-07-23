@@ -21,5 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EventsTableSeeder::class,
         ]);
+
+        $this->call([
+            SubscriptionsTableSeeder::class,
+        ]);
     }
 }
