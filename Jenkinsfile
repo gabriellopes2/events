@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage("Preparando ambiente") {
+            steps {
+                sh 'php artisan migrate'
+            }
+        }
         stage("Executando testes") {
             steps {
                 sh 'php artisan test'
