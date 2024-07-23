@@ -17,6 +17,7 @@ pipeline {
                 echo 'build'
                 sh '''
                     cd /var/www/events
+                    git config --global --add safe.directory /var/www/events
                     git pull
                     php artisan migrate
                 '''
