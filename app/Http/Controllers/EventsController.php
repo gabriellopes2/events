@@ -18,6 +18,7 @@ class EventsController extends Controller
     public function index()
     {
         //$user = Auth::id();
+        //teste
         $eventos = EventsModel::select('events.*')        
             ->get();
 
