@@ -22,6 +22,7 @@ class SubscriptionsController extends Controller
     public function searchSubscription($args)
     {
         //$user = Auth::user();
+        //
         $subscriptionId = $args;
         $subscription = SubscriptionModel::select('subscriptions.*')
             ->where('subscriptions.id', $subscriptionId)
