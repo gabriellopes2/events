@@ -24,5 +24,6 @@ class EventsModel extends Authenticatable
         'description',
         'date_initial',
         'date_final',
+        'cor'
     ];
 }

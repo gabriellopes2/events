@@ -21,6 +21,11 @@ class EventsController extends Controller
         $eventos = EventsModel::select('events.*')        
             ->get();
 
+        foreach ( $eventos as $ev )
+        {
+            $ev->cor = 'vermelho';
+        }
+
         return response()->json($eventos);
     }
 
